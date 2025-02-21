@@ -69,12 +69,6 @@ view(molecule, viewer='ngl')
 - We set `pbc=True` to indicate periodic boundary conditions in all directions.
 - PBCs can also be specified along each direction, e.g. `pbc=[True, True, False]` for a “slab” calculation with exposed surfaces.
 
-> ## Shortcuts
-> We have defined a Python function ```show()``` which will show enlarged atoms
-> and a unit cell with `nglview`.
-> This will save us from writing four lines of code every time we want to display a crystal.
-{: .callout}
-
 ~~~
 a = 5.387
 crystal = Atoms('Zn4S4',

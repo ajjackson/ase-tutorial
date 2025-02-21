@@ -54,7 +54,6 @@ keypoints:
 
 ~~~
 import ase.io
-from pathlib import Path
 from ase.visualize import view
 
 imported_crystal = ase.io.read("./files/ZnS.cif", format='cif')
@@ -65,11 +64,11 @@ view(imported_crystal, viewer='ngl')
 
 <img src="../fig/ZnS.png" alt="image of ZnS structure" width="300">
 
-- Use the vim terminal text editor (or otherwise) to inspect the .cif file
+- Use a text editor (e.g. nano) to inspect the .cif file
 - Crystallographic Information Framework (CIF) is quite a complicated format because it is designed to hold a lot of data relevant to crystallography. 
 
 ~~~
-vim "./files/ZnS.cif"
+nano "./files/ZnS.cif"
 ~~~
 {: .bash}
 
@@ -150,8 +149,8 @@ ase.io.write(
 > Import a structure file relevant to your own research, 
 > and write it to a different format. See what keywords 
 > are available for your favourite formats; for example, 
-> VASP users are likely to be interested in using  
-> `vasp5=True`.
+> when writing a CASTEP .cell file there is a similar option
+> to `scaled` but the name is different.
 {: .challenge}
 
 ### Some I/O formats support a sequence of atoms 

@@ -7,88 +7,26 @@ questions:
 objectives:
     - "Access virtual environment for the tutorials"
 keypoints:
-    - "We will use a STFC cloud environment"
-    - "Use your username given during registration"
-    - "It is possible to create a new instance" 
+    - "STFC cloud environment"
     - "There are several useful tools installed"
-    
+    - "You need to activate the ase-tutorial environment"    
+
 ---
 
-### We will use a STFC cloud environment 
+### We will use the STFC cloud training platform
 
-- We will use STFC cloud environment https://training.jupyter.stfc.ac.uk. 
-- It runs a custom baked docker image of Ubuntu Jammy Jellyfish
+- We will use STFC cloud environment https://training.analysis.stfc.ac.uk
+- You should have received sign-up information if you are attending the course
+- It runs a customised Linux environment
 
-
-### Use your username given during registration
-
-- Go to training.jupyter.stfc.ac.uk into your browser
-  - Click on **Signup** 
-  - Provide the username given during registration
-  - Choose password 
-  - Click **Create User**
-
-<img src="../fig/step_0.png" alt="landing page screen" width="1200">
-
-<img src="../fig/step_1.png" alt="Signup page" width="1200">
-
-- Authorization happens behind the scenes; if successful you will see something like the image below.
-
-<img src="../fig/step_2.png" alt="Signup page" width="1200">
-
-- Login with the credentials from above
-
-<img src="../fig/step_3.png" alt="Login Screen" width="1200">
-
-- If all ok you shall see something like the image below.
-
-<img src="../fig/step_4.png" alt="Login success" width="1200">
-
-### It is possible to create a new instance 
-
-- Sometimes you might need to create a new instance; for example, if something goes wrong or we need to use an updated image.
-- In this case, follow the steps below.
-
-1) Go to the hub settings: `File -> Hub Control Panel`
-
-<img src="../fig/step_5.png" alt="hub control panel settings" width="1200">
-
-2) Stop the instance: click on on the `Stop My Server` button 
-3) Logout: Click `Logout`.
-
-<img src="../fig/step_6.png" alt="stop server and logout" width="1200">
-
-4) Start the instance
-
-<img src="../fig/step_7.png" alt="start a new instance" width="1200">
-
-5) Choose the instance: (Test) - ASE Image
-
-<img src="../fig/step_8.png" alt="stop server and logout" width="1200">
-
-### There are several useful tools installed
-
-- In addition to the packages required for the tutorial, there are several other useful tools installed.
 
 #### Browsers
 
-**Mozilla Firefox** is installed on the machine.
-
-#### Compilers
-
-The **GNU** toolchain is used throughout the summer school and are available at the unix prompt.
-
-* **gcc**: the C/C++ compiler
-* **gfortran**: the fortran compiler (it assumes f77 and f95 for ``*``.f and ``*``.f90 respecively). Some of the codes may be in fixed format requiring the compiler flag -ffixed-form.
-* **python3** is available on the machine, use python3, be aware that python will give you python2.
-
-#### Plotting Packages
-
-Two graphics packages are available for plotting graphs: **gnuplot** and **xmgrace**. You can also use matplotlib from python.
+**Mozilla Firefox** is available. This may be a convenient way to view the tutorial, copy/paste, and access external files.
 
 #### Molecular Graphics Packages
 
-**Jmol, VESTA, AVOGADRO, VMD and xcrysden** is also available. In order to use Jmol type *jmol* on the command line.
+**VESTA** is available for visualisation of structure data.
 
 #### Editors
 
@@ -98,8 +36,32 @@ There are several editors available. You should choose whichever you are confort
 * **vim** the improved venerable UNIX screen mode editor.
 * **emacs** probably the commonest full-screen UNIX editor.
 * **gedit** gui editor
+* **vscode**
 
 #### Terminals
 
-When one refers to terminal, console or command line, usually means a shell window. Gnome Terminal, xterm and uxterm are available,
-You can click on the terminal icon to get one in the desktop or in the jupyter hub.
+You will need to open a terminal from the application menu. The one
+named "Terminal" is simplest; you can customise this with
+preferred fonts, colours etc.
+
+#### Jupyter
+
+For this tutorial you should _not_ use Jupyter from the application menu: see the next section for details.
+
+### ase-tutorial environment
+
+A Python virtual environment is set up in the ~/opt/ase-tutorial
+folder. When you open a new terminal/shell, you need to activate this environment with
+
+```bash
+source ~/opt/ase-tutorial/bin/activate
+```
+
+If the environment is active, "(ase-tutorial)" will appear in the prompt.
+You can deactivate the environment with `deactivate`.
+
+From this environment, you can get an interactive python terminal with
+`python` or `ipython` or launch a Jupyter environment with `jupyter
+lab`. Unlike the Jupyter in the application menu, this will connect
+properly to the tutorial environment (with pre-installed extensions).
+If you are prompted to choose a kernel, choose "Python3".

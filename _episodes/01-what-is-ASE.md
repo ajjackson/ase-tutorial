@@ -70,11 +70,15 @@ beethoven = Composer(birth_year=1770)
 
 ### The `Calculator` class calculates basic properties of an `Atoms` object
 
-- A `Calculator` object can be attached to an `Atoms` object. 
+- A `Calculator` object can be attached to an `Atoms` object.
 - The `Calculator` takes the atomic numbers and positions from `Atoms` and calculates basic properties such as energy or forces. 
-- `Calculator` objects can themselves be split into three types: 
-	- in-built calculators that run the simulation within the same Python interpreter process. - file-based calculators that run the simulation as a sub-process, with communication mediated through input and output files.
-	- calculators that run the simulation as a sub-process, with communication via pipes. Each approach has its own advantages and limitations which will be outlined later in the course.
+- `Calculator` objects can themselves be split into three types:
+
+  - in-built calculators that run the simulation within the same Python interpreter process.
+
+  - file-based calculators that run the simulation as a sub-process, with communication mediated through input and output files.
+
+  - calculators that run the simulation as a sub-process, with communication via pipes. Each approach has its own advantages and limitations which will be outlined later in "extra material" part of the course.
 
 > ## Further information
 > For further information about code structure, implementation and features we recommend
@@ -89,9 +93,9 @@ beethoven = Composer(birth_year=1770)
 
 > ## Course structure
 > The structure of this course is designed to reflect the structure of ASE. 
-> First we introduce the `Atoms` object (episodes 2-4) and `Calculators` object (episodes 5-7). 
-> We then outline how to simulate more complex and computationally demanding systems by parallelising over multiple compute cores (episode 8). 
-> Finally we apply our understanding to three common tasks: molecular dynamics, geometry optimisation and electronic structure calculations (episodes 9-11).
+> During the workshop we will introduce the `Atoms` object (episodes 2-4) and `Calculators` object (episodes 5-7). 
+> We then outline how to simulate more complex and computationally demanding systems by parallelising over multiple compute cores (episode 8).
+> Additional material is available, introducing some common applications: molecular dynamics, geometry optimisation and electronic structure calculations (episodes 9-11).
 > As the course progresses we move from smaller code snippets introducing the core ASE objects, to extended pieces of code for more complex tasks.
 > Throughout the course you will see boxes like this. They will provide Python hints, signposting to other resources, discussion prompts or exercises for you to complete.
 {: .callout}

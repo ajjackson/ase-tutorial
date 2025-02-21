@@ -37,7 +37,8 @@ keypoints:
 - Some other elements are included "for fun", but really this is a method for alloys of those metals. 
 
 > ## Warning
-> If you want to do a real application using EMT, you should use the much more efficient implementation in the [ASAP calculator](https://wiki.fysik.dtu.dk/asap).
+> If you want to do larger-scale "production" work with EMT, you should use the much more efficient implementation in the [ASAP calculator](https://wiki.fysik.dtu.dk/asap).
+This is available in the tutorial environment; instead of `from ase.calculators.emt import EMT`, use `from asap3 import EMT`.
 {: .callout}
 
 
@@ -47,9 +48,12 @@ keypoints:
 - The first step is to create an `Atoms` object describing a gold wire which is infinite in the x-direction.
 
 > ## Python tip
-> You may not recognise or understand the syntax used in the function definition, for example
-> `spacing: float = 2.5`. These are optional [Type Hints](https://peps.python.org/pep-0484/),
-> which were added in Python 3.5 (2015) and are becoming more widely-used as support is dropped for older versions.
+> You might be unfamiliar with the syntax used in the function definition, for example
+> `spacing: float = 2.5`. These are optional [Type Annotations](https://peps.python.org/pep-0484/);
+> you don't have to use them in your scripts but they can be helpful for improving readability and maintainability.
+> They can checked with [mypy](https://www.mypy-lang.org) to ensure your code is consistent,
+> or even at runtime with [pydantic](https://docs.pydantic.dev) to catch misuse as early as possible.
+> Some interactive development environments (IDEs) will do this automatically.
 {: .callout}
 
 ~~~
@@ -216,7 +220,8 @@ print(properties)
 - Importantly, this will not change even if the `Atoms` object is modified and properties are recalculated.
 
 > ## Warning
-> This is a new feature and does not yet work well for all calculators.
+> This is a somewhat new feature and does not yet work well for all calculators.
+> Unfortunately, one of those calculators is the Castep interface!
 {: .callout}
 
 ### The Lennard-Jones potential can be used to model the interaction between two non-bonding atoms or molecules
