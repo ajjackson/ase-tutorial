@@ -19,7 +19,7 @@ keypoints:
 ---
 
 > ## Code connection
-> In this episode we explore the [`ase.calculators.mopac` module](https://databases.fysik.dtu.dk/ase/ase/calculators/mopac.html), which is a file-based calculator for calculating standard properties (energy, forces and stress) from a set of atomic positions.
+> In this episode we explore the [`ase.calculators.castep` module](https://databases.fysik.dtu.dk/ase/ase/calculators/castep.html), which is a file-based calculator for calculating standard properties (energy, forces and stress) from a set of atomic positions.
 {: .callout}
 
 ### Typical academic codes are controlled by _input files_ and write their results to _output files_
@@ -30,31 +30,29 @@ keypoints:
 
 ### The workflow for file-based and built-in calculators are the same
 
-- The file-based calculator [MOPAC](https://openmopac.github.io) implements semi-empirical methods with molecular orbitals in open boundary conditions. 
-- After a long history of versions and licenses it was recently updated and made open-source under the LGPL.
-- To calculate a system energy we use the same workflow as introduced in the previous episode.
+- The file-based calculator [CASTEP](https://castep-docs.github.io/castep-docs/) implements plane-wave pseudopotential electronic structure calculations in periodic boundary conditions. 
+- To calculate a system energy we use the same workflow as introduced in [episode 4](../04-in-built-calculators/index.html).
 - First, we build an `Atoms` object
 
 ~~~
 import ase.build
 from ase.visualize import view
 
-atoms = ase.build.molecule('C2H6CHOH')
+atoms = ase.build.bulk('Ag', cubic=True)
 view(atoms, viewer='ngl')
 ~~~
 {: .python}
 
-<img src="../fig/molecule.png" alt="molecule" width="150">
-
-- Second, we attach a calculator: in this case, MOPAC.
+- Second, we attach a calculator: in this case, Castep.
 
 ~~~
-from ase.calculators.mopac import MOPAC
-atoms.calc = MOPAC(label='isopropyl-alcohol')
+from ase.calculators.castep import Castep
+atoms.calc = Castep(xc='pbesol', directory='silver', kpts=(6, 6, 6))
 ~~~
 {: .python}
 
-- Third, we calculate an energy.
+- Third, we calculate an energy. This will take a few seconds to run;
+  although the unit cell is small we specified quite a few k-points.
 
 ~~~
 print("Energy: ", atoms.get_potential_energy())
@@ -62,9 +60,7 @@ print("Energy: ", atoms.get_potential_energy())
 {: .python}
 
 ~~~
-MOPAC Job: "isopropyl-alcohol.mop" ended normally on Apr  3, 2023, at 21:29.
-
-Energy:  -2.7842547352472047
+Energy: -2611.299475375
 ~~~
 {: .output}
 
@@ -76,49 +72,38 @@ atoms.calc.results
 {: .python}
 
 ~~~
-{'version': 'v22.0.6',
- 'final_hof': -2.7842547352472047,
- 'total_energy': -772.22396,
- 'forces': array([[ 0.09452837, -0.58935651,  0.32936589],
-        [-0.08600234,  0.14274349,  0.18579394],
-        [ 0.07639485,  0.31559567, -0.11416446],
-        [ 0.04624326,  0.38071862,  0.42829993],
-        [-0.0548457 , -0.0925792 , -0.20465619],
-        [ 0.1883473 ,  0.10008969, -0.12176805],
-        [-0.20786882, -0.0372329 , -0.15859723],
-        [ 0.15218576, -0.10221587, -0.13990335],
-        [-0.20513693,  0.04222415, -0.04563994],
-        [ 0.06881428, -0.05719803, -0.06499095],
-        [-0.10723496, -0.05249259, -0.0346418 ],
-        [ 0.03457494, -0.05029646, -0.05909764]]),
- 'dipole': array([ 0.23963168, -0.26607236,  0.20049114]),
- 'energy': -2.7842547352472047,
- 'free_energy': -2.7842547352472047}
+{'energy_without_dispersion_correction': -2611.288222757,
+ 'free_energy_without_dispersion_correction': -2611.310727993,
+ 'energy_zero_without_dispersion_correction': -2611.299475375,
+ 'forces': array([[ 2.e-05, -1.e-05, -0.e+00],
+                  [-2.e-05,  1.e-05,  0.e+00]]),
+ 'charges': array([-0.,  0.]),
+ 'energy': -2611.299475375,
+ 'free_energy': -2611.310727993}
+
 ~~~
 {: .output}
 
 > ## Note
-> MOPAC is one of the calculators that doesn't support get_properties() yet... We can still get a nice results container this way, though!
+> Castep is one of the calculators that doesn't support get_properties() yet... We can still get a nice results container this way, though!
 {: .callout}
 
 ### However behind the scenes, file-based calculators work differently
 
-- When we requested the potential energy, the Calculator generated an input file using the name we provided as *label*: "ispropyl-alcohol.mop". 
-- This is a human-readable file: you can take a look at it.
+- When we requested the potential energy, the Calculator generated input files based on the *label* and *directory* parameters: "silver/castep.cell" and "silver/castep.param". 
+- These are human-readable files: you can take a look at them.
 
 ~~~
-cat ispropyl-alcohol.mop
+cat silver/castep.cell silver/castep.param
 ~~~
 
-- The top line includes some parameters for the calculation, including selection of the PM7 semi-empirical method and convergence tolerance.
-- Below that are the atomic positions.
-- After writing the input, the calculation is run by calling the `mopac` executable.
-- The results were written to "isopropyl-alcohol.out"; this is another human-readable file.
+- Hopefully the content looks somewhat familiar from this morning's CASTEP tutorial
+- ASE has added some comment lines with extra information which can be used in a "restart"; generally this isn't needed, however.
 
 > ## Exercise: Calculating energy and forces
 > Can you find the energy and forces in this file? Do they agree with the values from ASE?
 >
-> Hint: ASE mostly uses units related to eV and Ångström
+> Hint: CASTEP produces a few different energy values.
 {: .challenge}
 
 ### The Calculator object caches calculation results
@@ -133,28 +118,19 @@ print(atoms.get_forces())
 {: .python}
 
 ~~~
-[[ 0.09452837 -0.58935651  0.32936589]
- [-0.08600234  0.14274349  0.18579394]
- [ 0.07639485  0.31559567 -0.11416446]
- [ 0.04624326  0.38071862  0.42829993]
- [-0.0548457  -0.0925792  -0.20465619]
- [ 0.1883473   0.10008969 -0.12176805]
- [-0.20786882 -0.0372329  -0.15859723]
- [ 0.15218576 -0.10221587 -0.13990335]
- [-0.20513693  0.04222415 -0.04563994]
- [ 0.06881428 -0.05719803 -0.06499095]
- [-0.10723496 -0.05249259 -0.0346418 ]
- [ 0.03457494 -0.05029646 -0.05909764]]
+array([[ 2.e-05, -1.e-05, -0.e+00],
+       [-2.e-05,  1.e-05,  0.e+00]])
+
 ~~~
 {: .output}
 
 ### After changing a parameter the cache is invalidated
 
-- For example, we can select the AM1 semi-empirical scheme for the calculation.
+- For example, we can select the PBE functional instead of PBEsol.
 - Now when the potential energy is requested, a new calculation is performed.
 
 ~~~
-atoms.calc.set(method='AM1')
+atoms.calc.set(xc='PBE')
 atoms.get_potential_energy()
 ~~~
 {: .python}
