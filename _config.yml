@@ -11,7 +11,7 @@ flavor: ""
 pilot: false
 
 
-title: "Open Science with ASE: Core Tutorials"
+title: "Atomic Simulation Environment: Core Tutorials"
 # short title will be displayed in tab text
 short_title: "ASE tutorials"
 
@@ -33,13 +33,14 @@ repository: <USERNAME>/<PROJECT>
 # Email address, no mailto:
 # (Don't change this -- the contact address for your workshop will be set
 # in the index.md file)
-email: "l.whalley@northumbria.ac.uk"
+email: "adam.jackson@stfc.ac.uk"
 
 # Sites.
 carpentries_site: "https://carpentries.org/"
 workshop_repo: "https://github.com/carpentries/workshop-template"
 cc_by_human: "https://creativecommons.org/licenses/by/4.0/"
 ase_workshop: "https://ase-workshop-2023.github.io"
+ccp9_workshop: "https://ccp9.ac.uk/graduate_school_2025"
 swc_python_site: "https://swcarpentry.github.io/python-novice-inflammation/"
 
 # Surveys.

@@ -12,19 +12,23 @@ objectives:
 keypoints:
     - "The `quippy` package provides a Python interface to a range of interatomic and tight-binding potentials"
     - "The workflow for external, file-based and built-in calculators is the same"
+    - "The MACE package provides 'foundation model' machine-learned potentials"
     - "GPAW is a package for electronic structure calculations which relies on ASE"
     - "You can use GPAW to perform a DFT calculation from the Python shell"
     - "It is important to check for convergence of DFT energies with respect to k-point sampling"
 ---
 
 > ## Code connection
-> In this episode we explore two external calculators: [Quippy](http://libatoms.github.io/QUIP/), which provides an interface to a range of interatomic and tight-binding potentials, including [Gaussian Approximation Potentials](https://libatoms.github.io/GAP/), and the DFT calculator [GPAW](https://wiki.fysik.dtu.dk/gpaw/).
+> In this episode we explore two external calculators: [Quippy](http://libatoms.github.io/QUIP/), which provides an interface to a range of interatomic and tight-binding potentials, including [Gaussian Approximation Potentials](https://libatoms.github.io/GAP/); and [MACE](https://mace-docs.readthedocs.io) for machine-learned "foundatation models".
+>
+> If time allows, we can also try an external DFT calculator, GPAW. GPAW is implemented with Python bindings and relies heavily on ASE for functionality.
 {: .callout}
 
 ### The `quippy` package provides a Python interface to a range of interatomic and tight-binding potentials
 
 - Some calculators have interfaces which are not packaged with ASE, but available elsewhere.
 - For example, the `quippy` package provides a Python interface to a range of interatomic and tight-binding potentials.
+  The package is already installed, but to implement a particular model we will need some data.
 - In this episode we apply a machine-learning-based potential for Si.
 
 > ## Getting the model and training data
@@ -38,10 +42,6 @@ keypoints:
 > ~~~
 > {: .bash}
 >
-{: .callout}
-
-> ## Note
-> This requires a version of quippy that includes GAP. At the moment, `pip install` seems to work better than installing from conda-forge.
 {: .callout}
 
 ### The workflow for external, file-based and built-in calculators is the same
@@ -82,6 +82,32 @@ ax.set_ylabel('Energy / eV')
 
 - This is a bit more expensive than EMT but still a lot cheaper than density-functional theory!
 - A lot of work goes into developing a new potential, but with tools like quippy and ASE it is fairly easy for researchers to pick up the resulting model and apply it.
+
+### MACE is another style of machine-learned potential
+
+The MACE-MP-0 potential is a "foundation model" which was fitted to a wide range of data;
+it is intended to perform with useful accuracy across a wide range of chemistry.
+
+~~~
+from mace.calculators import mace_mp
+si.calc = mace_mp()
+~~~
+{: .python}
+
+Here we use the default options, but the `mace_mp` Calculator takes many parameters determining the model and performance.
+
+> ## Exercise: Comparing calculators
+> How well do the results agree between the GAP-Si model and MACE-MP-0?
+> Is that consistent across different structures?
+>
+> Hint: Is "energy" the most meaningful thing to compare?
+{: .challenge}
+
+> ## Data sources
+> The Python MACE calculator automatically downloads foundation models the first time they are needed.
+> You can also provide a path to a local file, e.g. if working on your own machine-learned potential.
+{: .callout}
+
 
 ### GPAW is a package for electronic structure calculations which relies on ASE
 

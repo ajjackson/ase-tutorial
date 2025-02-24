@@ -98,7 +98,7 @@ atoms.calc.results
 {: .output}
 
 > ## Note
-> MOPAC is one of the calculators that doesn't support get_properties() yet... We can still get a nice results container this way, though!
+> MOPAC is one of the calculators that doesn't support get_properties() yet... We can still get a nice results container this way, though! CASTEP is in a similar situation.
 {: .callout}
 
 ### However behind the scenes, file-based calculators work differently
