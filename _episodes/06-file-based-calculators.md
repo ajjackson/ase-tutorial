@@ -169,3 +169,16 @@ MOPAC Job: "isopropyl-alcohol.mop" ended normally on Apr  3, 2023, at 21:29.
 > ## Discussion
 > What happens to calc.results when a parameter is changed? When might we prefer to use `atoms.get_forces()` vs `atoms.calc.results['forces']`?
 {: .discussion}
+
+## CRYSTAL
+After the CRYSTAL training on Wednesday, you might like to try out the CRYSTAL-ASE interface
+
+Here's a little sample to get you started...
+
+~~~
+from ase.calculators.crystal import CRYSTAL
+atoms.calc = CRYSTAL(xc="PBE", basis="POB-DZVP")
+~~~
+{: .python}
+
+For more advanced features see the [documentation](https://wiki.fysik.dtu.dk/ase/ase/calculators/crystal.html). Be aware that the ASE-CRYSTAL interface only supports P1 (i.e. zero) symmetry.
